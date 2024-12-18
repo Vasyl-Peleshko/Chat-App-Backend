@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/User';
 import { generateTokenAndSetCookie } from '../utils/tokenUtils';
 import { signInUserRequest, signupUserRequest } from '../dto/auth/index';
+import Chat from '../models/Chat';
 
 export const signupUser = async (req: Request<unknown, unknown, signupUserRequest>, res: Response): Promise<void> => {
   try {
@@ -25,19 +26,20 @@ export const signupUser = async (req: Request<unknown, unknown, signupUserReques
 
     await newUser.save();
 
-    console.log(newUser);
     
 
     const randomUsers = await User.aggregate([{ $sample: { size: 3 } }]);
 
-    // const chatPromises = randomUsers.map((randomUser) => {
-    //   return new Chat({
-    //     participants: [newUser._id, randomUser._id],
-    //     messages: [],
-    //   }).save();
-    // });
+    console.log(randomUsers);
+    
+    const chatPromises = randomUsers.map((randomUser) => {
+      return new Chat({
+        participants: [newUser._id, randomUser._id],
+        messages: [],
+      }).save();
+    });
 
-    // await Promise.all(chatPromises);
+    await Promise.all(chatPromises);
 
     generateTokenAndSetCookie(res, {
       userId: newUser._id as string,

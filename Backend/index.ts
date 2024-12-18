@@ -23,7 +23,6 @@ const corsOptions: cors.CorsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-
 connectDB();
 
 app.use('/auth', authRoute)
