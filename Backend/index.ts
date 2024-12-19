@@ -14,9 +14,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions: cors.CorsOptions = {
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    credentials: true,  // Allow cookies/credentials
+  origin: ['http://localhost:5173', 'https://chat-app-frontend-xux0.onrender.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  credentials: true,  // Allow cookies/credentials
 
   };
 
