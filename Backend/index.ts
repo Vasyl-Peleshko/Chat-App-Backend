@@ -14,12 +14,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions: cors.CorsOptions = {
-  origin: ['http://localhost:5173', 'https://chat-app-frontend-xux0.onrender.com'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-  credentials: true,  // Allow cookies/credentials
-
-  };
-
+  origin: (origin, callback) => {
+    // Дозволяємо доступ з будь-якого джерела
+    callback(null, true);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,  // Дозволяємо куки
+};
 
 app.use(cors(corsOptions));
 app.use(express.json());
